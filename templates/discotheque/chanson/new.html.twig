@@ -1,0 +1,11 @@
+{% extends 'discotheque/base.html.twig' %}
+
+{% block title %}Créer une nouvelle chanson{% endblock %}
+
+{% block body %}
+    <h1>Créer une nouvelle chanson</h1>
+
+    {{ include('discotheque/chanson/_form.html.twig') }}
+
+    <a href="{{ path('app_discotheque') }}">Retour à la liste</a>
+{% endblock %}

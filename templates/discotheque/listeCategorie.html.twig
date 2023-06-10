@@ -1,0 +1,5 @@
+<div class="dropdown-menu">
+{% for categorie in categories %}
+    <a class="dropdown-item" href="{{ path('artistes_by_categories',{'slug': categorie.slug}) }}"> {{ categorie.nom }} ({{categorie.artistes | length}} artistes)</a>
+{% endfor %}
+</div>

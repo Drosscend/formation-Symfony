@@ -1,0 +1,30 @@
+{% extends 'discotheque/base.html.twig' %}
+
+{% block title %} {{ categorie.nom }} {% endblock %}
+
+{% block body %}
+
+    <div class="text-center">
+        <h1> {{ artistes | length}} artistes retrouvés pour la catégorie <span class="font-italic">{{ categorie.nom }}<span> </h1>
+    </div>
+    <div class="d-flex flex-wrap justify-content-around">
+        {% for artiste in artistes %}
+            <a class="card border-primary m-2 text-decoration-none" style="width: 20rem;" href="{{ path('app_artiste_show', {'id': artiste.id}) }}">
+                <h5 class="card-header">{{ artiste.getFullName | title }}</h5>
+                <div class="card-body">
+                    <p class="card-text">
+                        Chansons : <br>
+                        {% for chanson in artiste.chansons[:3] %}
+                            {{ chanson.nom }}{% if not loop.last %},{% endif %}
+                        {% endfor %}
+                        {% if artiste.chansons|length > 3 %}...{% endif %}
+                    </p>
+                </div>
+                <div class="card-footer">
+                    Date de naissance : {{ artiste.dateNaissance | date('d/m/Y') }} <br>
+                </div>
+            </a>
+        {% endfor %}
+    </div>
+
+{% endblock %}

@@ -1,0 +1,42 @@
+{% extends 'discotheque/base.html.twig' %}
+
+{% block body %}
+
+    <div class="text-center">
+        <h1> {{ artiste.nom }} {{ artiste.prenom }}</h1>
+    </div>
+
+
+    <ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item" role="presentation">
+            <a class="nav-link active" data-bs-toggle="tab" href="#presentation" aria-selected="true" role="tab">Présention</a>
+        </li>
+        <li class="nav-item" role="presentation">
+            <a class="nav-link" data-bs-toggle="tab" href="#chansons" aria-selected="false" role="tab" tabindex="-1">Chansons</a>
+        </li>
+    </ul>
+    <div id="myTabContent" class="tab-content">
+        <div class="tab-pane fade active show m-1" id="presentation" role="tabpanel">
+            <p><strong>Date de naissance :</strong> {{ artiste.dateNaissance | date('d/m/Y') }}</p>
+            <p><strong>Genre :</strong> {{ artiste.genre }}</p>
+            <p><strong>Catégorie :</strong> <a href="{{path('artistes_by_categories',{'slug': artiste.categorie.slug})}}" >{{ artiste.categorie.nom | title }}</a></p>
+            <p><strong>Biographie :</strong> {{ artiste.biographie }}</p>
+        </div>
+        <div class="tab-pane fade m-1" id="chansons" role="tabpanel">
+            <p>
+                <h2>Liste des chansons où l'artiste est présent(e) :</h2>
+                <ul>
+                {% set chansons = artiste.chansons %}
+                {% for chanson in chansons %}
+                    <li><a href="{{path('app_chanson_show',{'id': chanson.id})}}" >{{ chanson.nom | title }}</a></li>
+                {% endfor %}
+                </ul>
+            </p>
+        </div>
+    </div>
+
+    <div class="text-center">
+        <a href="{{path('artistes_by_categories',{'slug': artiste.categorie.slug})}}" class="btn btn-primary">Retour à la liste des artistes pour la categorie {{ artiste.categorie.nom | title }}</a>
+    </div>
+
+{% endblock %}

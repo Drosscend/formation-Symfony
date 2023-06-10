@@ -1,0 +1,6 @@
+{% for category in categories %}
+ <li class="nav-item">
+<a href="{{ path('app_articles_by_category',{'slug': category.slug}) }}"> {{ category.name}} </a>
+({{category.articles| length}} articles)
+</li>
+{% endfor %}

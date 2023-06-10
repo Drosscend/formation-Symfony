@@ -1,0 +1,60 @@
+{% extends 'discotheque/base.html.twig' %}
+
+{% block body %}
+
+    {% if message is defined and message is not empty %}
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {# si message "edit", "delete", "add", "error" #}
+            {% if message == "edit" %}
+                La chanson a bien été modifiée.
+            {% elseif message == "delete" %}
+                La chanson a bien été supprimée.
+            {% elseif message == "new" %}
+                La chanson a bien été ajoutée.
+            {% elseif message == "error" %}
+                Une erreur est survenue.
+            {% endif %}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    {% endif %}
+
+    {% if chansons|length == 0 %}
+        <div class="text-center">
+            <h1> Aucune chanson retrouvée</h1>
+        </div>
+    {% else %}
+        <div class="text-center">
+            <h1> {{ chansons | length}} chansons retrouvés</h1>
+        </div>
+
+        <button type="button" class="btn btn-primary btn-lg"><a href="{{ path('app_chanson_new') }}" class="text-light text-decoration-none">Ajouter une chanson</a></button>
+
+        <div class="d-flex flex-wrap justify-content-between">
+            {% for chanson in chansons %}
+                <div class="card border-primary m-2" style="width: 20rem;" href="{{ path('app_chanson_show', {'id': chanson.id}) }}">
+                    <h5 class="card-header">{{ chanson.nom | upper }}</h5>
+                    <div class="card-body">
+                        <p class="card-text">
+                            Artiste(s) : <br>
+                            {% set artistes = chanson.artistes %}
+                            {% for artiste in artistes[:3] %}
+                                <a href="{{ path('app_artiste_show', {'id': artiste.id}) }}" class="text-decoration-none">{{ artiste.fullName }}</a>
+                                {% if not loop.last %},{% endif %}
+                            {% endfor %}
+                            {% if artistes|length > 3 %}...{% endif %}
+                        </p>
+                    </div>
+                    <div class="card-footer">
+                        Date de sortie : {{ chanson.dateSortie | date('d/m/Y') }}
+                        <div class="d-flex justify-content-between mt-2">
+                            <a href="{{ path('app_chanson_show', {'id': chanson.id}) }}" class="btn btn-primary">Afficher</a>
+                            <a href="{{ path('app_chanson_edit', {'id': chanson.id}) }}" class="btn btn-secondary">Modifier</a>
+                            {# <a href="{{ path('app_chanson_delete', {'id': chanson.id}) }}" class="btn btn-danger">Supprimer</a> #}
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+{% endblock %}

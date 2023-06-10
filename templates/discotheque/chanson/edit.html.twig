@@ -1,0 +1,13 @@
+{% extends 'discotheque/base.html.twig' %}
+
+{% block title %}Modifier une chanson{% endblock %}
+
+{% block body %}
+    <h1>Modifier une chanson</h1>
+
+    {{ include('discotheque/chanson/_form.html.twig', {'button_label': 'Mettre à jour'}) }}
+    {{ include('discotheque/chanson/_delete_form.html.twig') }}
+
+    <a href="{{ path('app_discotheque') }}">Retour à la liste</a>
+
+{% endblock %}

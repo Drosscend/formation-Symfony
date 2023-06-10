@@ -1,0 +1,26 @@
+{% extends 'discotheque/base.html.twig' %}
+
+{% block title %}Chanson {{ chanson.nom }}{% endblock %}
+
+{% block body %}
+    <h1>Chanson {{ chanson.nom }}</h1>
+
+    {# date de sortie #}
+    <p><strong>Date de sortie :</strong> {{ chanson.dateSortie ? chanson.dateSortie|date('d/m/Y') : '' }}</p>
+
+    {# artistes #}
+    <p><strong>Artistes associés :</strong></p>
+    <ul>
+        {% for artiste in chanson.artistes %}
+            <li><a href="{{ path('app_artiste_show', {'id': artiste.id}) }}">{{ artiste.nom }}</a></li>
+        {% else %}
+            <li>Aucun artiste</li>
+        {% endfor %}
+    </ul>
+
+    <a href="{{ path('app_discotheque') }}">Retour à la liste</a>
+    <div class="d-flex mt-2">
+        <a href="{{ path('app_chanson_edit', {'id': chanson.id}) }}" class="btn btn-secondary  me-2">Modifier</a>
+        {{ include('discotheque/chanson/_delete_form.html.twig') }}
+    </div>
+{% endblock %}
